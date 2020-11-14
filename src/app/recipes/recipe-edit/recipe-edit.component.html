@@ -1,0 +1,43 @@
+<form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+  <div class="basic-container">
+    <div>
+      <button type="submit" mat-raised-button color="primary" [disabled]="!recipeForm.valid">Save</button>
+      <button type="button" mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+    </div>
+    <mat-form-field [style.width.%]="100" appearance="fill">
+      <mat-label>Name</mat-label>
+      <input matInput id="name" formControlName="name">
+    </mat-form-field>
+    <br>
+    <mat-form-field [style.width.%]="100" appearance="fill">
+      <mat-label for="imagePath">Image URL</mat-label>
+      <input matInput type="text" id="imagePath" formControlName="imagePath" #imagePath>
+    </mat-form-field>
+    <br>
+    <div class="col-xs-12">
+      <img [src]="imagePath.value" class="img-responsive">
+    </div>
+    <br>
+    <mat-form-field [style.width.%]="100" appearance="fill">
+      <mat-label for="description">Description</mat-label>
+      <textarea matInput id="description" formControlName="description" rows="6"></textarea>
+    </mat-form-field>
+  </div>
+  <div class="basic-container">
+    <h4 for="ingredients">Ingredients</h4>
+    <button mat-raised-button color="primary" type="button" (click)="onAddIngredient()">Add Ingredient</button>
+    <mat-list role="list" formArrayName="ingredients">
+        <mat-list-item role="listitem" *ngFor="let ingredientCrtl of controls; let i=index" [formGroupName]="i">
+              <mat-form-field [style.width.%]="60" appearance="fill">
+                <mat-label>Ingredient Name</mat-label>
+                <input matInput name="ingredient" id="ingredient" formControlName="name">
+              </mat-form-field>
+              <mat-form-field [style.width.%]="20" appearance="fill">
+                <mat-label>Amount</mat-label>
+                <input matInput type="number" name="amount" id="amount" formControlName="amount">
+              </mat-form-field>
+              <button (click)="onDeleteIngredient(i)" type="button" mat-mini-fab color="warn"><mat-icon>delete</mat-icon></button>
+        </mat-list-item>
+    </mat-list>
+  </div>
+</form>
